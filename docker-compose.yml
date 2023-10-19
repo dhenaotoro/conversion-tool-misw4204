@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  convertion-tool-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: "db"
+      FLASK_APP: "app.py"
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    links:
+      - db
+    networks:
+      - default
+
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=conversion_tool
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - "./data/postgres:/var/lib/postgresql"
+    ports:
+      - "5432:5432"
+    networks:
+      - default
