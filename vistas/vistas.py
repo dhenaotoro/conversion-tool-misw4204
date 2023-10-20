@@ -22,7 +22,7 @@ class VistaSignUp(Resource):
           - Debe tener al menos un número.
           - Debe tener al menos un caracter especial.
         """}, 500
-      contrasena_encriptada = hashlib.md5(request.json["password1"].encode('utf-8')).hexdigest()
+      contrasena_encriptada = hashlib.md5(request.json["password1"].encode("utf-8")).hexdigest()
       nuevo_usuario = Usuario(nombre=request.json["username"], contrasena=contrasena_encriptada, email=request.json["email"])
       db.session.add(nuevo_usuario)
       db.session.commit()
@@ -36,7 +36,7 @@ class VistaSignUp(Resource):
 class VistaLogin(Resource):
 
   def post(self):
-    contrasena_encriptada = hashlib.md5(request.json["password"].encode('utf-8')).hexdigest()
+    contrasena_encriptada = hashlib.md5(request.json["password"].encode("utf-8")).hexdigest()
     usuario = Usuario.query.filter(Usuario.nombre == request.json["username"], Usuario.contrasena == contrasena_encriptada).first()
     db.session.commit()
     if usuario is None:
@@ -73,6 +73,8 @@ class VistaArchivo(Resource):
     except Exception as e:
       # Handle any exceptions, and return an error response if necessary
       return {"mensaje": "Error: " + str(e)}, 500
+    
+class VistaArchivos(Resource):
           
   def get(self, id_task):
     try:
