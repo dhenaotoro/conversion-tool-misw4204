@@ -7,9 +7,8 @@ services:
       dockerfile: Dockerfile
     environment:
       DB_HOST: "db"
-      FLASK_APP: "app.py"
     ports:
-      - "5000:5000"
+      - "8000:5000"
     depends_on:
       - db
     links:
