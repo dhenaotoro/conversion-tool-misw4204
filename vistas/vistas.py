@@ -21,6 +21,7 @@ class VistaSignUp(Resource):
           - Debe tener al menos una letra en mayúscula.
           - Debe tener al menos un número.
           - Debe tener al menos un caracter especial.
+          - Debe tener 6 caracteres.
         """}, 500
       contrasena_encriptada = hashlib.md5(request.json["password1"].encode("utf-8")).hexdigest()
       nuevo_usuario = Usuario(nombre=request.json["username"], contrasena=contrasena_encriptada, email=request.json["email"])
@@ -51,10 +52,9 @@ class VistaArchivo(Resource):
     try:
       nombreArchivo = request.json["fileName"]
       nuevoFormato = request.json["newFormat"]
-      tiempoActual = datetime.datetime.now()
+      tiempoActual = datetime.now()
       marcaTiempo = tiempoActual.strftime("%Y-%m-%d %H:%M:%S")
       estado = "uploaded"
-      print("Prueba "+nombreArchivo)
 
       # Create an instance of the Archivo model and set its attributes
       archivo = Archivo(
@@ -69,7 +69,7 @@ class VistaArchivo(Resource):
       db.session.commit()
 
       # Return a success response
-      return {"mensaje": "Archivo cargo correctamente"}, 201
+      return {"mensaje": "Archivo cargó correctamente"}, 201
     except Exception as e:
       # Handle any exceptions, and return an error response if necessary
       return {"mensaje": "Error: " + str(e)}, 500
