@@ -47,6 +47,7 @@ class VistaLogin(Resource):
             return {"token": token_de_acceso}
 
 class VistaArchivo(Resource):
+
     @jwt_required()
     def post(self):
         try:
@@ -55,9 +56,7 @@ class VistaArchivo(Resource):
             tiempoActual = datetime.datetime.now()
             marcaTiempo = tiempoActual.strftime("%Y-%m-%d %H:%M:%S")
             estado = "uploaded"
-            print("Prueba "+nombreArchivo)
 
-            # Create an instance of the Archivo model and set its attributes
             archivo = Archivo(
                 marcaTiempo=marcaTiempo,
                 estado=estado,
@@ -65,18 +64,32 @@ class VistaArchivo(Resource):
                 nuevoFormato=nuevoFormato
             )
 
-            # Add the instance to the SQLAlchemy session and commit it to the database
             db.session.add(archivo)
             db.session.commit()
 
-            # Return a success response
             return {"mensaje": "Archivo cargo correctamente"}, 201
         except Exception as e:
-            # Handle any exceptions, and return an error response if necessary
             return {"mensaje": "Error: " + str(e)}, 500
 
-
-
-
-
-
+    @jwt_required()
+    def get(self):
+        try:
+            max = request.args.get('max', default=10, type=int)
+            order = request.args.get('order', default=0, type=int)
+            archivos = Archivo.query.limit(max)
+            archivoArreglo = []
+            for archivo in archivos:
+                archivoArreglo.append({
+                    'id': archivo.id,
+                    'marcaTiempo': archivo.marcaTiempo.strftime('%Y-%m-%d %H:%M:%S'),
+                    'estado': archivo.estado,
+                    'nombreArchivo': archivo.nombreArchivo,
+                    'nuevoFormato': archivo.nuevoFormato
+                })
+            if order == 0:
+                archivoArreglo.sort(key=lambda task: task['id'])
+            elif order == 1:
+                archivoArreglo.sort(key=lambda task: task['id'], reverse=True)
+            return jsonify(archivoArreglo)
+        except Exception as e:
+            return {"message": "Error: " + str(e)}, 500
