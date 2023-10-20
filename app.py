@@ -1,6 +1,8 @@
 from flask import Flask
 #from flask_jwt_extended import JWTManager
 from flask_restful import Api
+from modelos import db
+from vistas import VistaSignIn
 
 app = Flask(__name__)
 
@@ -14,7 +16,3 @@ app_context.push()
 
 api = Api(app)
 api.add_resource(VistaSignIn, '/signin')
-
-@app.route("/")
-def helloWord():
-    return "Hello world"
