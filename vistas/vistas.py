@@ -5,8 +5,9 @@ from datetime import datetime
 from flask import jsonify
 import re
 import hashlib
+import datetime
 
-from modelos import db, Usuario
+from modelos import db, Usuario, Archivo
 
 class VistaSignUp(Resource):
 
@@ -44,3 +45,38 @@ class VistaLogin(Resource):
         else:
             token_de_acceso = create_access_token(identity=usuario.id)
             return {"token": token_de_acceso}
+
+class VistaArchivo(Resource):
+    @jwt_required()
+    def post(self):
+        try:
+            nombreArchivo = request.json["fileName"]
+            nuevoFormato = request.json["newFormat"]
+            tiempoActual = datetime.datetime.now()
+            marcaTiempo = tiempoActual.strftime("%Y-%m-%d %H:%M:%S")
+            estado = "uploaded"
+            print("Prueba "+nombreArchivo)
+
+            # Create an instance of the Archivo model and set its attributes
+            archivo = Archivo(
+                marcaTiempo=marcaTiempo,
+                estado=estado,
+                nombreArchivo=nombreArchivo,
+                nuevoFormato=nuevoFormato
+            )
+
+            # Add the instance to the SQLAlchemy session and commit it to the database
+            db.session.add(archivo)
+            db.session.commit()
+
+            # Return a success response
+            return {"mensaje": "Archivo cargo correctamente"}, 201
+        except Exception as e:
+            # Handle any exceptions, and return an error response if necessary
+            return {"mensaje": "Error: " + str(e)}, 500
+
+
+
+
+
+

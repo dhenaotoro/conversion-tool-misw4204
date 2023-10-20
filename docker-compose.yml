@@ -13,8 +13,6 @@ services:
       - db
     links:
       - db
-    networks:
-      - default
 
   db:
     image: postgres
@@ -25,6 +23,4 @@ services:
     volumes:
       - "./data/postgres:/var/lib/postgresql"
     ports:
-      - "5433:5432"
-    networks:
-      - default
+      - "5432:5432"

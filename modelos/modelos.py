@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import fields
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+from sqlalchemy import Column, Date
 
 db = SQLAlchemy()
 
@@ -16,3 +17,11 @@ class UsuarioSchema(SQLAlchemyAutoSchema):
         load_instance = True
         
     id = fields.String()
+
+class Archivo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    marcaTiempo = Column(Date)
+    estado = db.Column(db.String(50))
+    nombreArchivo = db.Column(db.String(50))
+    nuevoFormato = db.Column(db.String(50))
+   
