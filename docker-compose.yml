@@ -11,8 +11,6 @@ services:
       - "8000:5000"
     depends_on:
       - db
-    links:
-      - db
 
   db:
     image: postgres

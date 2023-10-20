@@ -77,11 +77,29 @@ class VistaArchivo(Resource):
 class VistaArchivos(Resource):
           
   def get(self, id_task):
+    response = {}
     try:
-      print("ID GET: ", str(id_task))
-      return "Test"
+      if id_task != None:
+        # Nombre archivo
+        # Estado
+        # Url de descarga archivo original
+        # Url de descarga archivo convertido
+        tarea = Archivo.query.filter_by(id=id_task).first()
+        response = {
+          "mensaje": "Datos encontratos",
+          "tarea": {
+            "Nombre": str(tarea.nombreArchivo),
+            "Estado": str(tarea.estado),
+            "Url original": str(tarea.urlArchivoOriginal),
+            "Url convertido": str(tarea.urlArchivoConvertido),
+          }
+        }, 201
+      else:
+        response = { "mensaje": """No existe una tarea con id {}""".format(str(id_task)) }, 409
     except Exception as error:
-      return "Error"
+      response = { "mensaje": "Error: " + str(error) }, 500
+    finally:
+      return response
         
   def delete(self, id_task):
     try:
