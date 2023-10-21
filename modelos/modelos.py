@@ -15,7 +15,7 @@ class Archivo(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   marcaTiempo = Column(DateTime)
   estado = db.Column(db.String(50))
-  nombreArchivo = db.Column(db.String(50))
+  nombreArchivo = db.Column(db.String(500))
   nuevoFormato = db.Column(db.String(50))
   urlArchivo = db.Column(db.String(500), default="")
 

@@ -18,7 +18,8 @@ def connect_to_database_with_retry(db_uri, max_retries=5, retry_interval=5):
   while retries < max_retries:
     try:
       db.init_app(app)
-      with app.app_context():
+      with app.app_context() as app_context:
+        app_context.push()
         db.create_all()
         return
     except OperationalError:

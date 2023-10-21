@@ -5,6 +5,7 @@ from datetime import datetime
 from flask import jsonify
 import re
 import hashlib
+import moviepy.editor as moviepy
 
 from modelos import db, Usuario, Archivo
 
@@ -44,6 +45,18 @@ class VistaLogin(Resource):
     else:
       token_de_acceso = create_access_token(identity=usuario.id)
       return {"token": token_de_acceso}
+    
+  #Este endpoint es de prueba, con el fin de revisar el comportamiento de la conversion de archivos desde un endpoint
+  def get(self):
+    archivo = Archivo.query.filter_by(estado='uploaded').first()
+    nombre_archivo_sin_extension = re.sub(r'.(mp4|webm|avi)', '', archivo.nombreArchivo)
+    nombre_archivo_completo = re.sub(r'.*\w\/', '', nombre_archivo_sin_extension)
+    clip = moviepy.VideoFileClip(archivo.nombreArchivo)
+    if archivo.nuevoFormato == 'webm' or archivo.nuevoFormato == 'mp4':
+       clip.write_videofile(f"./videos/destino/{nombre_archivo_completo}.{archivo.nuevoFormato}")
+    elif archivo.nuevoFormato == 'avi':
+       clip.write_videofile(f"./videos/destino/{nombre_archivo_completo}.{archivo.nuevoFormato}", codec='rawvideo')
+    return {"nombre": archivo.nombreArchivo, "extraccion": nombre_archivo_completo}
 
 class VistaArchivo(Resource):
     @jwt_required()
@@ -54,6 +67,9 @@ class VistaArchivo(Resource):
             tiempoActual = datetime.now()
             marcaTiempo = tiempoActual.strftime("%Y-%m-%d %H:%M:%S")
             estado = "uploaded"
+
+            if nuevoFormato == 'mpeg' or nuevoFormato == 'wmv':
+              return {"mensaje": "El formato debe ser entre avi, mp4 o webm. Los formatos mpeg y wmv aun no son soportados"}, 500
 
             archivo = Archivo(
                 marcaTiempo=marcaTiempo,
