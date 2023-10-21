@@ -99,16 +99,19 @@ class VistaArchivos(Resource):
     try:
       if id_task != None:
         tarea = Archivo.query.filter_by(id=id_task).first()
-        response = {
-          "mensaje": "Datos encontratos",
-          "tarea": {
-            "Estado": str(tarea.estado),
-            "Url original": str(tarea.nombreArchivo),
-            "Url convertido": str(tarea.urlArchivo),
-          }
-        }, 201
+        if tarea:
+          response = {
+            "mensaje": "Datos encontratos",
+            "tarea": {
+              "Estado": str(tarea.estado),
+              "Url original": str(tarea.nombreArchivo),
+              "Url convertido": str(tarea.urlArchivo),
+            }
+          }, 201
+        else:
+          response = { "mensaje": """No existe una tarea con id {}""".format(str(id_task)) }, 409
       else:
-        response = { "mensaje": """No existe una tarea con id {}""".format(str(id_task)) }, 409
+        response = { "mensaje": """El id {} ingresado no es valido""".format(str(id_task)) }, 409
     except Exception as error:
       response = { "mensaje": "Error: " + str(error) }, 500
     finally:
@@ -116,8 +119,20 @@ class VistaArchivos(Resource):
   
   @jwt_required()
   def delete(self, id_task):
+    response = {}
     try:
-      print("ID DELETE: ", str(id_task))
-      return "Test"
+      if id_task != None:
+        tarea = Archivo.query.filter_by(id=id_task).first()
+        if tarea:
+          tareaEliminar = Archivo.query.get_or_404(tarea.id)
+          db.session.delete(tareaEliminar)
+          db.session.commit()
+          response = { "mensaje": """La tarea con id {} se elimino correctamente""".format(str(id_task)) }, 201
+        else:
+          response = { "mensaje": """No existe una tarea con id {}""".format(str(id_task)) }, 409
+      else:
+        response = { "mensaje": """El id {} ingresado no es valido""".format(str(id_task)) }, 409
     except Exception as error:
-      return "Error"
+      response = { "mensaje": "Error: " + str(error) }, 500
+    finally:
+      return response
