@@ -8,6 +8,7 @@ import hashlib
 import moviepy.editor as moviepy
 
 from modelos import db, Usuario, Archivo
+from tareas import convertir_archivos
 
 class VistaSignUp(Resource):
 
@@ -79,6 +80,10 @@ class VistaArchivo(Resource):
             )
             db.session.add(archivo)
             db.session.commit()
+
+            archivos = Archivo.query.filter_by(estado='uploaded').all()
+            for archivo in archivos:
+              convertir_archivos.delay(archivo)
 
             return {"mensaje": "Archivo cargo correctamente"}, 201
         except Exception as e:
