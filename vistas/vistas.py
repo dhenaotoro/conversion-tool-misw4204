@@ -59,8 +59,7 @@ class VistaArchivo(Resource):
                 marcaTiempo=marcaTiempo,
                 estado=estado,
                 nombreArchivo=nombreArchivo,
-                nuevoFormato=nuevoFormato,
-                urlArchivoOriginal=nombreArchivo
+                nuevoFormato=nuevoFormato
             )
             db.session.add(archivo)
             db.session.commit()
