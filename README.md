@@ -26,7 +26,9 @@ cd conversion-tool-misw4204
 
 3. Ubicar los videos que se desean convertir en la ruta `.\videos\origen` (para windows) `./videos/origen` (para linux o mac).
 
-Nota: Tener presente que el video debe estar en formato `mp4`, `webm` o `avi`. Actualmente no se soportan formatos `mpeg` y `wmv`.
+Nota1: Tener presente que el video debe estar en formato `mp4`, `webm` o `avi`. Actualmente no se soportan formatos `mpeg` y `wmv`.
+
+Nota2: Tener presente que el nombre del archivo de video no contenga espacios o caracteres especiales: `VideoPrueba.mp4`.
 
 4. Luego de haber instalado las dependencias de la aplicación, por favor ejecutar el siguiente comando para levantar la aplicación conversion-tool con todos los contenedores necesarios.
 
@@ -70,3 +72,13 @@ Nota 2: Es importante tener en cuenta que los videos se tienen que almacenar en 
 6. [Opcional] Ejecutar el endpoint denominado `Recuperar tarea` para verificar el estado de un video en especial, donde se deben enviar el id del video.
 
 7. [Opcional] Ejecutar el endpoint denominado `Eliminar tarea` para eliminar un video de la base de datos en caso de que no se desee convertir.
+
+## Pasos para ver el video destino
+
+1. Ingresar a Docker Desktop.
+2. Buscar el contenedor denominado `conversion-tool-misw4204_worker_#` donde el caracter # puede corresponder a un número (dependiendo de cómo Docker Desktop lo muestre).
+3. Ingresar a una terminal del contenedor denominado `conversion-tool-misw4204_worker_#`.
+4. Dentro de la terminal ejecutar el siguiente comando:
+`ls -ltha ./videos/destino/`
+
+Nota: En ese directorio deben aparecer los videos que fueron procesados.
