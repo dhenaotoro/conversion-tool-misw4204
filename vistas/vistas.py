@@ -8,7 +8,7 @@ import hashlib
 import moviepy.editor as moviepy
 
 from modelos import db, Usuario, Archivo, ArchivoSchema
-from tareas import convertir_archivos
+#from tareas import convertir_archivos
 
 class VistaSignUp(Resource):
 
@@ -46,18 +46,6 @@ class VistaLogin(Resource):
     else:
       token_de_acceso = create_access_token(identity=usuario.id)
       return {"token": token_de_acceso}
-    
-  #Este endpoint es de prueba, con el fin de revisar el comportamiento de la conversion de archivos desde un endpoint
-  def get(self):
-    archivo = Archivo.query.filter_by(estado='uploaded').first()
-    nombre_archivo_sin_extension = re.sub(r'.(mp4|webm|avi)', '', archivo.nombreArchivo)
-    nombre_archivo_completo = re.sub(r'.*\w\/', '', nombre_archivo_sin_extension)
-    clip = moviepy.VideoFileClip(archivo.nombreArchivo)
-    if archivo.nuevoFormato == 'webm' or archivo.nuevoFormato == 'mp4':
-       clip.write_videofile(f"./videos/destino/{nombre_archivo_completo}.{archivo.nuevoFormato}")
-    elif archivo.nuevoFormato == 'avi':
-       clip.write_videofile(f"./videos/destino/{nombre_archivo_completo}.{archivo.nuevoFormato}", codec='rawvideo')
-    return {"nombre": archivo.nombreArchivo, "extraccion": nombre_archivo_completo}
 
 class VistaArchivo(Resource):
     @jwt_required()
@@ -82,15 +70,16 @@ class VistaArchivo(Resource):
             db.session.add(archivo)
             db.session.commit()
 
-            archivos = Archivo.query.filter_by(estado='uploaded').all()
-            archivos_a_retornar = []
-            archivo_schema = ArchivoSchema()
-            for archivo in archivos:
-              archivo_as_json = archivo_schema.dump(archivo)
-              archivos_a_retornar.append(archivo_as_json)
-              convertir_archivos.delay(archivo_as_json)
+            #archivos = Archivo.query.filter_by(estado='uploaded').all()
+            #archivos_a_retornar = []
+            #archivo_schema = ArchivoSchema()
+            #for archivo in archivos:
+            #  archivo_as_json = archivo_schema.dump(archivo)
+            #  archivos_a_retornar.append(archivo_as_json)
+            #  convertir_archivos.delay(archivo_as_json)
 
-            return {"mensaje": "Archivo cargo correctamente", "archivos_schema": archivos_a_retornar}, 201
+            #return {"mensaje": "Archivo cargo correctamente", "archivos_schema": archivos_a_retornar}, 201
+            return {"mensaje": "Archivo cargo correctamente"}, 201
         except Exception as e:
             return {"mensaje": "Error: " + str(e), "archivo_schema": archivo_as_json}, 500
 

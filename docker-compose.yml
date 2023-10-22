@@ -37,7 +37,7 @@ services:
       context: ./
     hostname: worker
     entrypoint: celery
-    command: -A tareas worker --loglevel=info
+    command: -A tareas worker --loglevel=info -B
     volumes:
       - ./:/worker-info
     links:
