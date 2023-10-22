@@ -58,6 +58,15 @@ class VistaArchivo(Resource):
             marcaTiempo = tiempoActual.strftime("%Y-%m-%d %H:%M:%S")
             estado = "uploaded"
 
+            nombre_archivo_separado_por_punto = request.json["fileName"].split('.')
+            ruta_y_nombre_archivo = nombre_archivo_separado_por_punto[0]
+            extension_archivo_origen = nombre_archivo_separado_por_punto[1]
+            if re.match(r'./videos/origen/', ruta_y_nombre_archivo):
+              return {"mensaje": "El video debe ser guardado en la ruta ./videos/origen/."}, 500
+            if not extension_archivo_origen in {"mp4", "webm", "avi"}:
+              return {"mensaje": "El formato del video a convertir debe ser entre avi, mp4 o webm."}, 500
+            if extension_archivo_origen == nuevoFormato:
+              return {"mensaje": f"Se debe elegir un formato destino distinto al formato del video original"}, 500
             if not nuevoFormato in {"mp4", "webm", "avi"}:
               return {"mensaje": "El formato debe ser entre avi, mp4 o webm. Los formatos mpeg y wmv aun no son soportados"}, 500
 

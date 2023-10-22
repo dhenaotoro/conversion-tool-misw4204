@@ -16,38 +16,17 @@ A continuación se enuncian dos apartados para explicar como desplegar la aplica
 - Opción https:
 ```bash
 git clone https://github.com/dhenaotoro/conversion-tool-misw4204
+cd conversion-tool-misw4204
 ```
 - Opción ssh:
 ```bash
 git clone git@github.com:dhenaotoro/conversion-tool-misw4204.git
+cd conversion-tool-misw4204
 ```
 
-3. Luego de estar en el directorio principal, por favor ejecutar los comandos necesarios para instalar las dependencias del proyecto:
+3. Ubicar los videos que se desean convertir en la ruta `.\videos\origen` (para windows) `./videos/origen` (para linux o mac).
 
-- Asegurarse que tiene instalado python igual o mayor a la versión 3.8 en su máquina, en caso de que no, descargarlo desde [aquí](https://www.python.org/downloads/)
-
-- Posteriormente, se debe crear un ambiente virtual usando los siguientes comandos:
-```bash
-py -m venv virtualenv
-venv virtualenv
-```
-
-- Luego se debe activar el ambiente virtual usando el siguiente comando:
-
-Para windows:
-```bash
-.\virtualenv\Scripts\activate.bat
-```
-
-Para Linux o Mac
-```bash
-./virtualenv/bin/activate
-```
-
-- Finalmente, se debe ejecutar el comando para instalar las depedencias:
-```bash
-pip install -r requirements.txt
-```
+Nota: Tener presente que el video debe estar en formato `mp4`, `webm` o `avi`. Actualmente no se soportan formatos `mpeg` y `wmv`.
 
 4. Luego de haber instalado las dependencias de la aplicación, por favor ejecutar el siguiente comando para levantar la aplicación conversion-tool con todos los contenedores necesarios.
 
@@ -68,6 +47,8 @@ Nota: Tener presente que el comando `docker-compose up` toma el control de la co
 
 Nota: Todos los contenedores deben estar en color verde incluyendo el contenedor agrupador.
 
+6. En caso de que ya se encuentre el contenedor agrupador desplegado, si se desea desplegar, se recomienda borrarlo completamente e iniciar nuevamente los pasos desde el punto 3.
+
 ## Pasos para usar la aplicación.
 
 1. Descargar la colección y ambiente de Postman desde [aquí]()
@@ -76,16 +57,16 @@ Nota: Todos los contenedores deben estar en color verde incluyendo el contenedor
 
 3. Hace login usando el usuario creado y su contraseña por medio del endpoint denominado `Recuperar Token`, con el fin de generar el token que a su vez permite autenticar el usuario ante los demás endpoints relacionados con la gestión de la conversión de videos.
 
-4. Ubicar el video que se desea convertir en la ruta `.\videos\origen` (para windows) `./videos/origen` (para linux o mac).
+Nota: En caso de que el token expire, por favor ejecutar nuevamente este paso y continuar ejecutando el endpoint que falló por token expirado.
 
-Nota: Tener presente que el video debe estar en formato `mp4`, `webm` o `avi`. Actualmente no se soportan formatos `mpeg` y `wmv`.
+4. Ejecutar el endpoint denominado `Crear tarea de conversion` para guardar el video en la base de datos. Aquí debemos especificar la ruta del video y el formato que se desea convertir.
 
-5. Ejecutar el endpoint denominado `Crear tarea de conversion` para guardar el video en la base de datos. Aquí debemos especificar la ruta del video y el formato que se desea convertir.
+Nota 1: la aplicación tiene una tarea asincrona que se encarga de revisar cada minuto (Desde el momento en que se desplegó toda la aplicación) si existen videos por convertir, en caso de que si, se convierten y se actualiza en la base de datos el estado del video `processed`.
 
-Nota: la aplicación tiene una tarea asincrona que se encarga de revisar cada minuto (Desde el momento en que se desplegó toda la aplicación) si existen videos por convertir, en caso de que si, se convierten y se actualiza en la base de datos el estado del video `processed`.
+Nota 2: Es importante tener en cuenta que los videos se tienen que almacenar en el directorio `./videos/origen` antes de hacer el despliegue de la aplicación para que se puedan procesar.
 
-6. [Opcional] Ejecutar el endpoint denominado `Recuperar tareas de conversion` para verificar el estado de los videos que estén registrados en la base de datos.
+5. [Opcional] Ejecutar el endpoint denominado `Recuperar tareas de conversion` para verificar el estado de los videos que estén registrados en la base de datos.
 
-7. [Opcional] Ejecutar el endpoint denominado `Recuperar tarea` para verificar el estado de un video en especial, donde se deben enviar el id del video.
+6. [Opcional] Ejecutar el endpoint denominado `Recuperar tarea` para verificar el estado de un video en especial, donde se deben enviar el id del video.
 
-8. [Opcional] Ejecutar el endpoint denominado `Eliminar tarea` para eliminar un video de la base de datos en caso de que no se desee convertir.
+7. [Opcional] Ejecutar el endpoint denominado `Eliminar tarea` para eliminar un video de la base de datos en caso de que no se desee convertir.
