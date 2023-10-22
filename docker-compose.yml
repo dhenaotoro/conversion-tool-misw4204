@@ -5,12 +5,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    command: cerely -A tareas worker -l info
     environment:
       DB_HOST: "db"
     ports:
       - "8000:5000"
+    links:
+      - redis-server
     depends_on:
       - db
+      - redis-server
 
   db:
     image: postgres
@@ -22,3 +26,21 @@ services:
       - "./data/postgres:/var/lib/postgresql"
     ports:
       - "5432:5432"
+
+  redis-server:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  worker:
+    build:
+      context: ./
+    hostname: worker
+    entrypoint: celery
+    command: -A tareas worker --loglevel=info
+    volumes:
+      - ./:/worker-info
+    links:
+      - redis-server
+    depends_on:
+      - redis-server

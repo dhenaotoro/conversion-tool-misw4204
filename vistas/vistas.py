@@ -7,7 +7,7 @@ import re
 import hashlib
 import moviepy.editor as moviepy
 
-from modelos import db, Usuario, Archivo
+from modelos import db, Usuario, Archivo, ArchivoSchema
 from tareas import convertir_archivos
 
 class VistaSignUp(Resource):
@@ -62,6 +62,7 @@ class VistaLogin(Resource):
 class VistaArchivo(Resource):
     @jwt_required()
     def post(self):
+        archivo_as_json = "SIN JSON"
         try:
             nombreArchivo = request.json["fileName"]
             nuevoFormato = request.json["newFormat"]
@@ -69,7 +70,7 @@ class VistaArchivo(Resource):
             marcaTiempo = tiempoActual.strftime("%Y-%m-%d %H:%M:%S")
             estado = "uploaded"
 
-            if nuevoFormato == 'mpeg' or nuevoFormato == 'wmv':
+            if not nuevoFormato in {"mp4", "webm", "avi"}:
               return {"mensaje": "El formato debe ser entre avi, mp4 o webm. Los formatos mpeg y wmv aun no son soportados"}, 500
 
             archivo = Archivo(
@@ -82,12 +83,16 @@ class VistaArchivo(Resource):
             db.session.commit()
 
             archivos = Archivo.query.filter_by(estado='uploaded').all()
+            archivos_a_retornar = []
+            archivo_schema = ArchivoSchema()
             for archivo in archivos:
-              convertir_archivos.delay(archivo)
+              archivo_as_json = archivo_schema.dump(archivo)
+              archivos_a_retornar.append(archivo_as_json)
+              convertir_archivos.delay(archivo_as_json)
 
-            return {"mensaje": "Archivo cargo correctamente"}, 201
+            return {"mensaje": "Archivo cargo correctamente", "archivos_schema": archivos_a_retornar}, 201
         except Exception as e:
-            return {"mensaje": "Error: " + str(e)}, 500
+            return {"mensaje": "Error: " + str(e), "archivo_schema": archivo_as_json}, 500
 
     @jwt_required()
     def get(self):

@@ -25,4 +25,17 @@ class UsuarioSchema(SQLAlchemyAutoSchema):
     load_instance = True
       
   id = fields.String()
+
+class ArchivoSchema(SQLAlchemyAutoSchema):
+  class Meta:
+    model = Archivo
+    load_instance = True
+      
+  id = fields.String()
+  marcaTiempo = fields.DateTime(format="%Y-%m-%d %H:%M:%S")
+  estado = fields.String()
+  nombreArchivo = fields.String()
+  nuevoFormato = fields.String()
+  urlArchivo = fields.String()
+
    
