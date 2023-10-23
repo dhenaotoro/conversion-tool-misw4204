@@ -56,7 +56,7 @@ Nota: Todos los contenedores deben estar en color verde incluyendo el contenedor
 
 2. Crear un usuario en la aplicación usando el endpoint denominado `Crear cuenta de usuario`.
 
-3. Hace login usando el usuario creado y su contraseña por medio del endpoint denominado `Recuperar Token`, con el fin de generar el token que a su vez permite autenticar el usuario ante los demás endpoints relacionados con la gestión de la conversión de videos.
+3. Hacer login usando el usuario creado y su contraseña por medio del endpoint denominado `Recuperar Token`, con el fin de generar el token que a su vez permite autenticar el usuario ante los demás endpoints relacionados con la gestión de la conversión de videos.
 
 Nota: En caso de que el token expire, por favor ejecutar nuevamente este paso y continuar ejecutando el endpoint que falló por token expirado.
 
