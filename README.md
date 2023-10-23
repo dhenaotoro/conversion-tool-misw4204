@@ -50,8 +50,6 @@ Nota: Tener presente que el comando `docker-compose up` toma el control de la co
 
 Nota: Todos los contenedores deben estar en color verde incluyendo el contenedor agrupador.
 
-6. En caso de que ya se encuentre el contenedor agrupador desplegado, si se desea desplegar, se recomienda borrarlo completamente e iniciar nuevamente los pasos desde el punto 3.
-
 ## Pasos para usar la aplicación.
 
 1. Descargar la colección y ambiente de Postman desde [aquí](https://github.com/dhenaotoro/conversion-tool-misw4204/files/13064891/OneDrive_2_22-10-2023.zip), una vez descargado se descomprime y se importa en postman.
