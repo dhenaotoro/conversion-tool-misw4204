@@ -29,8 +29,6 @@ cd conversion-tool-misw4204
 
 Nota1: Tener presente que el video debe estar en formato `mp4`, `webm` o `avi`. Actualmente no se soportan formatos `mpeg` y `wmv`.
 
-Nota2: Tener presente que el nombre del archivo de video no contenga espacios o caracteres especiales: `VideoPrueba.mp4`.
-
 4. Luego de haber instalado las dependencias de la aplicación, por favor ejecutar el siguiente comando para levantar la aplicación conversion-tool con todos los contenedores necesarios.
 
 ```bash
