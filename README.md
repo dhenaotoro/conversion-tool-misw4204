@@ -27,9 +27,11 @@ cd conversion-tool-misw4204
 
 3. Ubicar los videos que se desean convertir en la ruta `.\videos\origen` (para windows) `./videos/origen` (para linux o mac).
 
-Nota1: Tener presente que el video debe estar en formato `mp4`, `webm` o `avi`. Actualmente no se soportan formatos `mpeg` y `wmv`.
+Nota: Tener presente que el video debe estar en formato `mp4`, `webm` o `avi`. Actualmente no se soportan formatos `mpeg` y `wmv`.
 
-4. Luego de haber instalado las dependencias de la aplicación, por favor ejecutar el siguiente comando para levantar la aplicación conversion-tool con todos los contenedores necesarios.
+4. Una vez realizados los pasos anteriores, por favor ejecutar el siguiente comando para levantar la aplicación conversion-tool con todos los contenedores necesarios.
+
+Nota: Si se desea agregar o renombrar un archivo adicional para conversión después de desplegar el docker, se recomienda realizar el docker build para que la aplicación cargue el archivo nuevo o renombrado.
 
 ```bash
 docker-compose up
