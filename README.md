@@ -53,7 +53,7 @@ Nota: Todos los contenedores deben estar en color verde incluyendo el contenedor
 
 ## Pasos para usar la aplicación.
 
-1. Descargar la colección y ambiente de Postman desde [aquí]([OneDrive_2_22-10-2023.zip](https://github.com/dhenaotoro/conversion-tool-misw4204/files/13064891/OneDrive_2_22-10-2023.zip)), una vez descargado se descomprime y se importa en postman.
+1. Descargar la colección y ambiente de Postman desde [aquí](https://github.com/dhenaotoro/conversion-tool-misw4204/files/13064891/OneDrive_2_22-10-2023.zip), una vez descargado se descomprime y se importa en postman.
 
 2. Crear un usuario en la aplicación usando el endpoint denominado `Crear cuenta de usuario`.
 
