@@ -6,10 +6,7 @@ A continuación se enuncian dos apartados para explicar como desplegar la aplica
 
 ## Pasos para ejecutar los contenedores que despliegan la aplicación conversion-tool.
 
-1. Asegurarse que la aplicación Docker Desktop está instalada y ejecutada en su computador sea Mac o Windows. Ver el siguiente enlace para instalar Docker Desktop en ambas plataformas:
-
- - Windows: ToDo incluir enlace.
- - Linux o Mac: ToDo incluir enlace.
+1. Asegurarse que la aplicación Docker Desktop está instalada y ejecutada en su computador sea Mac o Windows. Ver el siguiente enlace para instalar Docker Desktop en ambas plataformas [aquí](https://jpadillaa.hashnode.dev/docker-instalacion-de-docker).
 
 2. Abrir una consola de comandos y descargar del repositorio los fuentes de la aplicación conversion-tool.
 
