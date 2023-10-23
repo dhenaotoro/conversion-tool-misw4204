@@ -19,6 +19,11 @@ cd conversion-tool-misw4204
 git clone git@github.com:dhenaotoro/conversion-tool-misw4204.git
 cd conversion-tool-misw4204
 ```
+- Opción Github Cli:
+```bash
+gh repo clone dhenaotoro/conversion-tool-misw4204
+cd conversion-tool-misw4204
+```
 
 3. Ubicar los videos que se desean convertir en la ruta `.\videos\origen` (para windows) `./videos/origen` (para linux o mac).
 
