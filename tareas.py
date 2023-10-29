@@ -18,7 +18,7 @@ celery_app.conf.update(
 celery_app.conf.beat_schedule = {
     "convertir_archivos-task": {
         "task": "tareas.convertir_archivos",
-        "schedule": timedelta(minutes=1)
+        "schedule": timedelta(minutes=2)
     }
 }
 
@@ -74,4 +74,4 @@ def convertir_archivos(self: Task):
         except Exception as e:
             log.info(f"Ocurrió un error al leer el archivo {str(e)}")
 
-        self.after_return()
+        #self.after_return()
