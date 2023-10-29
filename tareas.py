@@ -18,7 +18,7 @@ celery_app.conf.update(
 celery_app.conf.beat_schedule = {
     "convertir_archivos-task": {
         "task": "tareas.convertir_archivos",
-        "schedule": timedelta(minutes=2)
+        "schedule": timedelta(minutes=6)
     }
 }
 
