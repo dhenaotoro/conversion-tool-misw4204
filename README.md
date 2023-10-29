@@ -6,11 +6,7 @@ A continuación se enuncian dos apartados para explicar como desplegar la aplica
 
 ## Pasos para ejecutar los contenedores que despliegan la aplicación conversion-tool.
 
-1. Asegurarse que la aplicación Docker Desktop está instalada y ejecutada en su computador sea Mac o Windows. Ver el siguiente enlace para instalar Docker Desktop en ambas plataformas:
-
- - Windows: ToDo incluir enlace.
- - Linux o Mac: ToDo incluir enlace.
-
+1. Asegurarse que la aplicación Docker Desktop está instalada y ejecutada en su computador sea Mac o Windows. Ver el siguiente [enlace](https://jpadillaa.hashnode.dev/docker-instalacion-de-docker) para instalar Docker Desktop en ambas plataformas.
 2. Abrir una consola de comandos y descargar del repositorio los fuentes de la aplicación conversion-tool.
 
 - Opción https:
@@ -23,14 +19,19 @@ cd conversion-tool-misw4204
 git clone git@github.com:dhenaotoro/conversion-tool-misw4204.git
 cd conversion-tool-misw4204
 ```
+- Opción Github Cli:
+```bash
+gh repo clone dhenaotoro/conversion-tool-misw4204
+cd conversion-tool-misw4204
+```
 
 3. Ubicar los videos que se desean convertir en la ruta `.\videos\origen` (para windows) `./videos/origen` (para linux o mac).
 
-Nota1: Tener presente que el video debe estar en formato `mp4`, `webm` o `avi`. Actualmente no se soportan formatos `mpeg` y `wmv`.
+Nota: Tener presente que el video debe estar en formato `mp4`, `webm` o `avi`. Actualmente no se soportan formatos `mpeg` y `wmv`.
 
-Nota2: Tener presente que el nombre del archivo de video no contenga espacios o caracteres especiales: `VideoPrueba.mp4`.
+4. Una vez realizados los pasos anteriores, por favor ejecutar el siguiente comando para levantar la aplicación conversion-tool con todos los contenedores necesarios.
 
-4. Luego de haber instalado las dependencias de la aplicación, por favor ejecutar el siguiente comando para levantar la aplicación conversion-tool con todos los contenedores necesarios.
+Nota: Si se desea agregar o renombrar un archivo adicional para conversión después de desplegar el docker, se recomienda realizar el docker build para que la aplicación cargue el archivo nuevo o renombrado.
 
 ```bash
 docker-compose up
@@ -49,15 +50,13 @@ Nota: Tener presente que el comando `docker-compose up` toma el control de la co
 
 Nota: Todos los contenedores deben estar en color verde incluyendo el contenedor agrupador.
 
-6. En caso de que ya se encuentre el contenedor agrupador desplegado, si se desea desplegar, se recomienda borrarlo completamente e iniciar nuevamente los pasos desde el punto 3.
-
 ## Pasos para usar la aplicación.
 
-1. Descargar la colección y ambiente de Postman desde [aquí]()
+1. Descargar la colección [aquí](https://uniandes-my.sharepoint.com/personal/id_sanchez2_uniandes_edu_co/_layouts/15/download.aspx?UniqueId=07c6f31ddbe147a19efb88bda6319d84&e=1C1LAD) y ambiente [aquí](https://uniandes-my.sharepoint.com/personal/id_sanchez2_uniandes_edu_co/_layouts/15/download.aspx?UniqueId=060f425af33d4f4a91300d117e7ca160&e=3bTEd7) de Postman , una vez descargado se descomprime y se importa en postman.
 
 2. Crear un usuario en la aplicación usando el endpoint denominado `Crear cuenta de usuario`.
 
-3. Hace login usando el usuario creado y su contraseña por medio del endpoint denominado `Recuperar Token`, con el fin de generar el token que a su vez permite autenticar el usuario ante los demás endpoints relacionados con la gestión de la conversión de videos.
+3. Hacer login usando el usuario creado y su contraseña por medio del endpoint denominado `Recuperar Token`, con el fin de generar el token que a su vez permite autenticar el usuario ante los demás endpoints relacionados con la gestión de la conversión de videos.
 
 Nota: En caso de que el token expire, por favor ejecutar nuevamente este paso y continuar ejecutando el endpoint que falló por token expirado.
 
