@@ -27,3 +27,4 @@ celery
 redis
 MoviePy
 tzdata
+google-cloud-pubsub
